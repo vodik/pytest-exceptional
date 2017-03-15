@@ -1,11 +1,38 @@
 # -*- coding: utf-8 -*-
 
 import pytest
-from _pytest._code.code import TerminalRepr
+from time import time
+from _pytest._code.code import TerminalRepr, ExceptionInfo
+
+
+class RecordFailure:
+    """Mock pytest internal reporter to emulate CallInfo.
+
+    Creates a class that can be safely passed into
+    pytest_runtest_makereport to add failure report based on an
+    arbitrary exception.
+    """
+    def __init__(self, error, when="setup"):
+        __tracebackhide__ = True
+        self.when = when
+        self.start = time()
+        self.stop = time()
+
+        # Hack to populate excinfo from our exception
+        try:
+            raise error
+        except:
+            self.excinfo = ExceptionInfo()
 
 
 class PytestException(Exception):
-    pass
+    @classmethod
+    def makereport(cls, item, *args, **kwargs):
+        when = kwargs.pop('when', 'setup')
+        call = RecordFailure(cls(*args, **kwargs), when=when)
+        hook = item.ihook
+        report = hook.pytest_runtest_makereport(item=item, call=call)
+        hook.pytest_runtest_logreport(report=report)
 
 
 class ExceptionRepr(TerminalRepr):
