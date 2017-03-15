@@ -52,8 +52,10 @@ def pytest_report_teststatus(report):
 
 
 def pytest_terminal_summary(terminalreporter):
-    for cls in PytestException.__subclasses__():
-        cat, _, _ = cls.__teststatus__
+    categories = {cls.__teststatus__[0]
+                  for cls in PytestException.__subclasses__()}
+
+    for cat in categories:
         for report in terminalreporter.getreports(cat):
             header = terminalreporter._getfailureheadline(report)
             report.longrepr.terminal_summary(terminalreporter, header)
