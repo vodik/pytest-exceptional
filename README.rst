@@ -1,10 +1,14 @@
 pytest-exceptional
 ==================
 
+
+.. image:: https://img.shields.io/pypi/v/pytest-exceptional.svg
+    :target: https://pypi.python.org/pypi/pytest-exceptional
+.. image:: https://img.shields.io/pypi/pyversions/pytest-exceptional.svg
+    :target: https://pypi.python.org/pypi/pytest-exceptional
 .. image:: https://travis-ci.org/vodik/pytest-exceptional.svg?branch=master
     :target: https://travis-ci.org/vodik/pytest-exceptional
     :alt: See Build Status on Travis CI
-
 .. image:: https://ci.appveyor.com/api/projects/status/github/vodik/pytest-exceptional?branch=master
     :target: https://ci.appveyor.com/project/vodik/pytest-exceptional/branch/master
     :alt: See Build Status on AppVeyor
