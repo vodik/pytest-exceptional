@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import time
 import pytest
-from time import time
 from _pytest._code.code import TerminalRepr, ExceptionInfo
 
 
@@ -12,16 +12,16 @@ class RecordFailure:
     pytest_runtest_makereport to add failure report based on an
     arbitrary exception.
     """
-    def __init__(self, error, when="setup"):
-        __tracebackhide__ = True
+    def __init__(self, exception, when="setup"):
         self.when = when
-        self.start = time()
-        self.stop = time()
+        self.start = time.time()
+        self.stop = time.time()
 
-        # Hack to populate excinfo from our exception
+        # We need to generate a traceback to continue. ExceptionInfo
+        # calls sys.exc_info()
         try:
-            raise error
-        except:
+            raise exception
+        except Exception:
             self.excinfo = ExceptionInfo()
 
 
