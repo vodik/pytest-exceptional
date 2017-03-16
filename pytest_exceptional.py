@@ -75,12 +75,15 @@ def pytest_runtest_makereport(item, call):
 
 def pytest_report_teststatus(report):
     if hasattr(report, 'excinfo'):
-        return report.excinfo.value.__teststatus__
+        return getattr(report.excinfo.value, '__teststatus__', None)
 
 
 def pytest_terminal_summary(terminalreporter):
-    categories = {cls.__teststatus__[0]
-                  for cls in PytestException.__subclasses__()}
+    categories = set()
+    for cls in PytestException.__subclasses__():
+        teststatus = getattr(cls, '__teststatus__', None)
+        if teststatus:
+            categories.add(teststatus[0])
 
     for cat in categories:
         for report in terminalreporter.getreports(cat):
