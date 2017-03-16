@@ -49,7 +49,7 @@ class ExceptionRepr(TerminalRepr):
     def terminal_summary(self, terminalreporter, header):
         try:
             header = self.excinfo.value.summary_header(header)
-        except:
+        except AttributeError:
             pass
 
         _, _, word = self.excinfo.value.__teststatus__
@@ -65,9 +65,7 @@ def pytest_namespace():
 def pytest_runtest_makereport(item, call):
     outcome = yield
     report = outcome.get_result()
-    if not call.excinfo:
-        return
-    elif call.excinfo.errisinstance(PytestException):
+    if call.excinfo and call.excinfo.errisinstance(PytestException):
         report.excinfo = call.excinfo
         report.longrepr = ExceptionRepr(report.excinfo,
                                         report.longrepr)

@@ -10,7 +10,8 @@ def test_custom_exception(testdir):
         import pytest
 
         class StartFire(pytest.Exception):
-            __teststatus__ = 'fire', u'🔥', ('FIRE', {'purple': True, 'bold': True})
+            __teststatus__ = 'fire', u'🔥', ('FIRE', {'purple': True,
+                                                      'bold': True})
 
             def toterminal(self, longrepr, tw):
                 tw.line("FIRE! Please evacuate the building!")
@@ -39,7 +40,8 @@ def test_makereport(testdir):
         import pytest
 
         class StartFire(pytest.Exception):
-            __teststatus__ = 'fire', u'🔥', ('FIRE', {'purple': True, 'bold': True})
+            __teststatus__ = 'fire', u'🔥', ('FIRE', {'purple': True,
+                                                      'bold': True})
 
             def toterminal(self, longrepr, tw):
                 tw.line("FIRE! Please evacuate the building!")
