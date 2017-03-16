@@ -18,7 +18,7 @@ class RecordFailure:
         self.stop = time.time()
 
         # We need to generate a traceback to continue. ExceptionInfo
-        # calls sys.exc_info()
+        # calls sys.exc_info() internally
         try:
             raise exception
         except Exception:
