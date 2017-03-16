@@ -13,7 +13,7 @@ def read(fname):
 
 setup(
     name='pytest-exceptional',
-    version='0.1.0',
+    version='0.1.1',
     author='Simon Gomizelj',
     author_email='simon@vodik.xyz',
     maintainer='Simon Gomizelj',
